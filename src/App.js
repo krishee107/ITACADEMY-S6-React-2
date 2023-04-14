@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
 
 function App() {
+  const [checkboxes, setCheckboxes] = useState({
+    web: false,
+    seo: false,
+    ads: false,
+    price: 0
+  });
+
+  const handleChange = (event) => {
+    const { name, checked } = event.target;
+    const price = checked ? checkboxes.price + (name === 'web' ? 500 : name === 'seo' ? 300 : 200)
+      : checkboxes.price - (name === 'web' ? 500 : name === 'seo' ? 300 : 200);
+    setCheckboxes({ ...checkboxes, [name]: checked, price });
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>¿Qué quieres hacer?</div>
+      <form style={{ display: `grid`, gap: `10px`, padding: `10px 0` }}>
+        <label htmlFor="web"><input type="checkbox" name="web" id="web" onChange={handleChange} /> Una pàgina web (500€)</label>
+        <label htmlFor="seo"><input type="checkbox" name="seo" id="seo" onChange={handleChange} /> Una consultoria SEO (300€)</label>
+        <label htmlFor="ads"><input type="checkbox" name="ads" id="ads" onChange={handleChange} /> Una campanya de Google Ads (200€)</label>
+      </form>
+
+      <span>Preu: {checkboxes.price}€</span>
     </div>
   );
 }
