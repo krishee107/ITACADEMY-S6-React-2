@@ -58,8 +58,8 @@ function App() {
         <label htmlFor="web"><input type="checkbox" name="web" id="web" onChange={handleChange} /> Una pàgina web (500€)</label>
         {checkboxes.web &&
           <div style={{ display: 'grid' }}>
-            <label htmlFor="idioma">Número de páginas <input type="number" name="idiomas" id="idiomas" onChange={handlePagesChange} /></label>
-            <label htmlFor="idioma">Número de idiomas <input type="number" name="paginas" id="paginas" onChange={handlePagesChange} /></label>
+            <label htmlFor="idioma">Número de páginas <input type="number" value={pageInputs.idiomas} name="idiomas" id="idiomas" onChange={handlePagesChange} /></label>
+            <label htmlFor="idioma">Número de idiomas <input type="number" value={pageInputs.paginas} name="paginas" id="paginas" onChange={handlePagesChange} /></label>
           </div>
         }
         <label htmlFor="seo"><input type="checkbox" name="seo" id="seo" onChange={handleChange} /> Una consultoria SEO (300€)</label>
