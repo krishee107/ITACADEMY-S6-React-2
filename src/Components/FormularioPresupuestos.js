@@ -3,7 +3,7 @@ import { Inputs } from "./Inputs";
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
-const Presupuestos = () => {
+const Presupuestos = (props) => {
     const [open, setOpen] = useState(false);
     const [textoModal, setTextoModal] = useState("");
 
@@ -24,6 +24,19 @@ const Presupuestos = () => {
         }
     })
 
+    const [datosPresupuesto, setDatosPresupuesto] = useState(() => {
+        const storedDatosPresupuesto = JSON.parse(localStorage.getItem("datosPresupuesto"));
+        return storedDatosPresupuesto ? storedDatosPresupuesto : {
+            nomPresupuesto: '',
+            nomCliente: ''
+        }
+    });
+    const handleDatos = (event) => {
+        const { name, value } = event.target;
+        setDatosPresupuesto({ ...datosPresupuesto, [name]: value })
+        localStorage.setItem("datosPresupuesto", JSON.stringify(datosPresupuesto));
+    }
+
     useEffect(() => {
         calculatePrice();
         localStorage.setItem("checkboxes", JSON.stringify(checkboxes));
@@ -37,8 +50,6 @@ const Presupuestos = () => {
             ...checkboxes,
             [name]: checked
         });
-
-        console.log(checkboxes)
     };
 
     const handlePagesChange = (event) => {
@@ -89,11 +100,28 @@ const Presupuestos = () => {
         backgroundColor: 'white'
     };
 
+    const submitForm = () => {
+        const presupuesto = {
+            nombrePresupuesto: datosPresupuesto.nomPresupuesto,
+            nombreCliente: datosPresupuesto.nomCliente,
+            web: checkboxes.web,
+            seo: checkboxes.seo,
+            ads: checkboxes.ads,
+            paginas: pageInputs.paginas,
+            idiomas: pageInputs.idiomas,
+            price: checkboxes.price
+        }
+
+        return [presupuesto];
+    }
 
     return (
         <div style={{ border: `solid 1px`, padding: `15px 20px`, borderRadius: `15px` }}>
             <h3 style={{ textAlign: `center` }}>¿Qué quieres hacer?</h3>
             <form style={{ display: `grid`, gap: `10px`, padding: `10px 0` }}>
+                <input type="text" onChange={handleDatos} name="nomPresupuesto" id="nomPresupuesto" placeholder="Nombre del presupuesto" style={{ borderRadius: `15px`, padding: `10px`, border: `1px solid` }} />
+                <input type="text" onChange={handleDatos} name="nomCliente" id="nomCliente" placeholder="Nombre del cliente" style={{ borderRadius: `15px`, padding: `10px`, border: `1px solid` }} />
+
                 <label htmlFor="web"><input type="checkbox" name="web" id="web" onChange={handleChange} checked={checkboxes.web} /> Una pàgina web (500€)</label>
                 {checkboxes.web &&
                     <div style={{ display: 'grid', border: 'solid 3px black', width: "fit-content", padding: "20px", borderRadius: "15px", gap: "10pxpm" }}>
@@ -115,9 +143,12 @@ const Presupuestos = () => {
                 }
                 <label htmlFor="seo"><input type="checkbox" name="seo" id="seo" onChange={handleChange} checked={checkboxes.seo} /> Una consultoria SEO (300€)</label>
                 <label htmlFor="ads"><input type="checkbox" name="ads" id="ads" onChange={handleChange} checked={checkboxes.ads} /> Una campanya de Google Ads (200€)</label>
+
+                <span>Preu: {checkboxes.price}€</span>
+                <button type="submit" onClick={(e) => { e.preventDefault(); props.handle(submitForm()) }}>Guardar presupuesto</button>
             </form>
 
-            <span>Preu: {checkboxes.price}€</span>
+
 
             <Modal
                 open={open}

@@ -1,10 +1,27 @@
 
-import ListaPresupuestos from "../components/ListaPresupuestos";
+import { useState } from "react";
+import Presupuesto from "../components/Presupuesto";
 import NavBar from "../components/Navbar";
-import Presupuestos from "../components/Presupuestos";
+import Presupuestos from "../components/FormularioPresupuestos";
 
 
 const Page2 = () => {
+    const [presupuestos, setPresupuestos] = useState([]);
+
+    const handlePresupuesto = (presupuesto) => {
+        const nuevoPresupuesto = {
+            nombrePresupuesto: presupuesto[0].nombrePresupuesto,
+            nombreCliente: presupuesto[0].nombreCliente,
+            web: presupuesto[0].web,
+            seo: presupuesto[0].seo,
+            ads: presupuesto[0].ads,
+            paginas: presupuesto[0].paginas,
+            idiomas: presupuesto[0].idiomas,
+            price: presupuesto[0].price
+        };
+        setPresupuestos([...presupuestos, nuevoPresupuesto]);
+        console.log(presupuestos)
+    };
 
     return (
         <div>
@@ -12,11 +29,13 @@ const Page2 = () => {
 
             <div style={{ display: `flex`, justifyContent: `space-around`, paddingTop: `20px` }}>
                 <div id="presupuestos">
-                    <Presupuestos />
+                    <Presupuestos presupuestos={presupuestos} handle={handlePresupuesto} />
                 </div>
 
                 <div id="listaPresupuestos">
-                    <ListaPresupuestos />
+                    {presupuestos.map((presupuesto, index) => (
+                        <Presupuesto key={index} presupuesto={presupuesto} />
+                    ))}
                 </div>
             </div>
 
@@ -25,3 +44,6 @@ const Page2 = () => {
 }
 
 export default Page2;
+
+
+        //console.log(presupuesto[0].nombrePresupuesto, presupuesto[0].nombreCliente, presupuesto[0].web, presupuesto[0].seo)
