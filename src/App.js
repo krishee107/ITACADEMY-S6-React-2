@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Inputs } from "./Components/Inputs";
 
 function App() {
   const [checkboxes, setCheckboxes] = useState({
@@ -57,9 +58,9 @@ function App() {
       <form style={{ display: `grid`, gap: `10px`, padding: `10px 0` }}>
         <label htmlFor="web"><input type="checkbox" name="web" id="web" onChange={handleChange} /> Una pàgina web (500€)</label>
         {checkboxes.web &&
-          <div style={{ display: 'grid' }}>
-            <label htmlFor="idioma">Número de páginas <input type="number" value={pageInputs.idiomas} name="idiomas" id="idiomas" onChange={handlePagesChange} /></label>
-            <label htmlFor="idioma">Número de idiomas <input type="number" value={pageInputs.paginas} name="paginas" id="paginas" onChange={handlePagesChange} /></label>
+          <div style={{ display: 'grid', border: 'solid 3px black', width: "fit-content", padding: "20px", borderRadius: "15px", gap: "10pxpm" }}>
+            <label htmlFor="idioma">Número de páginas <Inputs value={pageInputs.paginas} name={"paginas"} onChange={handlePagesChange} /></label>
+            <label htmlFor="idioma">Número de idiomas <Inputs value={pageInputs.idiomas} name={"idiomas"} onChange={handlePagesChange} /> </label>
           </div>
         }
         <label htmlFor="seo"><input type="checkbox" name="seo" id="seo" onChange={handleChange} /> Una consultoria SEO (300€)</label>
