@@ -9,8 +9,8 @@ function App() {
     price: 0
   });
   const [pageInputs, setPageInputs] = useState({
-    paginas: 0,
-    idiomas: 0
+    paginas: 1,
+    idiomas: 1
   })
 
   const handleChange = (event) => {
