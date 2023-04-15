@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [checkboxes, setCheckboxes] = useState({
@@ -14,11 +14,43 @@ function App() {
 
   const handleChange = (event) => {
     const { name, checked } = event.target;
-    const price = checked ? checkboxes.price + (name === 'web' ? 500 : name === 'seo' ? 300 : 200)
-      : checkboxes.price - (name === 'web' ? 500 : name === 'seo' ? 300 : 200);
-    setCheckboxes({ ...checkboxes, [name]: checked, price });
+    setCheckboxes({
+      ...checkboxes,
+      [name]: checked
+    });
+
+    console.log(checkboxes)
   };
 
+  const handlePagesChange = (event) => {
+    const { name, value } = event.target;
+    setPageInputs({
+      ...pageInputs,
+      [name]: value
+    })
+  }
+
+  useEffect(() => {
+    calculatePrice();
+  }, [pageInputs, checkboxes])
+
+
+  const calculatePrice = () => {
+    let newPrice = 0;
+    if (checkboxes.web) {
+      newPrice += 500;
+      newPrice += pageInputs.idiomas * pageInputs.paginas * 30;
+    }
+    if (checkboxes.seo)
+      newPrice += 300;
+    if (checkboxes.ads)
+      newPrice += 200;
+
+    setCheckboxes({
+      ...checkboxes,
+      price: newPrice
+    })
+  }
   return (
     <div className="App">
       <div>¿Qué quieres hacer?</div>
@@ -26,8 +58,8 @@ function App() {
         <label htmlFor="web"><input type="checkbox" name="web" id="web" onChange={handleChange} /> Una pàgina web (500€)</label>
         {checkboxes.web &&
           <div style={{ display: 'grid' }}>
-            <label htmlFor="idioma">Número de páginas <input type="number" id="idioma" value={pageInputs.idiomas} /></label>
-            <label htmlFor="idioma">Número de idiomas <input type="number" id="paginas" value={pageInputs.paginas} /></label>
+            <label htmlFor="idioma">Número de páginas <input type="number" name="idiomas" id="idiomas" onChange={handlePagesChange} /></label>
+            <label htmlFor="idioma">Número de idiomas <input type="number" name="paginas" id="paginas" onChange={handlePagesChange} /></label>
           </div>
         }
         <label htmlFor="seo"><input type="checkbox" name="seo" id="seo" onChange={handleChange} /> Una consultoria SEO (300€)</label>
