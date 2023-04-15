@@ -19,9 +19,11 @@ export const Inputs = (props) => {
 
     const handleDecrement = (event) => {
         event.preventDefault();
-        setValue(parseInt(value) - 1);
-        const fakeEvent = { target: { name: props.name, value: parseInt(value) - 1 } };
-        props.onChange(fakeEvent);
+        if (value > 0) {
+            setValue(parseInt(value) - 1);
+            const fakeEvent = { target: { name: props.name, value: parseInt(value) - 1 } };
+            props.onChange(fakeEvent);
+        }
     };
 
     return (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Inputs } from "./Components/Inputs";
+import { Inputs } from "./components/Inputs";
 
 function App() {
   const [checkboxes, setCheckboxes] = useState(() => {
@@ -75,7 +75,7 @@ function App() {
           </div>
         }
         <label htmlFor="seo"><input type="checkbox" name="seo" id="seo" onChange={handleChange} checked={checkboxes.seo} /> Una consultoria SEO (300€)</label>
-        <label htmlFor="ads"><input type="checkbox" name="ads" id="ads" onChange={handleChange} checked={checkboxes.web} /> Una campanya de Google Ads (200€)</label>
+        <label htmlFor="ads"><input type="checkbox" name="ads" id="ads" onChange={handleChange} checked={checkboxes.ads} /> Una campanya de Google Ads (200€)</label>
       </form>
 
       <span>Preu: {checkboxes.price}€</span>
