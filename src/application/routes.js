@@ -3,9 +3,9 @@ import Home from '../pages/Home'
 import Page2 from '../pages/Page2';
 
 const Router = () => (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
         <Routes>
-            <Route index element={<Home />} />
+            <Route index element={<Home />} path="/" />
             <Route path="/presupuesto/web=:webChecked?&seo=:seoChecked?&ads=:adsChecked?&pagina=:numPagina?&idioma=:numIdioma?" element={<Page2 />} />
 
 
