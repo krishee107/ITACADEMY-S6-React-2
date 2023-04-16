@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Inputs } from "./Inputs";
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
 
 const Presupuestos = (props) => {
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [textoModal, setTextoModal] = useState("");
 
@@ -50,6 +52,7 @@ const Presupuestos = (props) => {
             ...checkboxes,
             [name]: checked
         });
+        const url = `/${name}=${checked}`;
     };
 
     const handlePagesChange = (event) => {
