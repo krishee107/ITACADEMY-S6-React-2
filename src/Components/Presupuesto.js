@@ -1,24 +1,26 @@
 const ListaPresupuestos = (props) => {
-    return (
-        <div style={{ border: `solid 1px`, padding: `10px`, borderRadius: `15px`, margin: `10px 0`, display: `grid`, width: `200px` }}>
-            <div><b>Nombre:</b> {props.presupuesto.nombrePresupuesto}</div>
-            <div><b>Cliente:</b>{props.presupuesto.nombreCliente}</div>
-            <div>
-                <b>Pedido:</b>
-                <ul>
-                    <li>Web: {props.presupuesto.web ? "Sí" : "No"}</li>
-                    <li>Web -->Páginas: {props.presupuesto.paginas}</li>
-                    <li>Web --> Idiomas: {props.presupuesto.idiomas}</li>
-                    <li>SEO: {props.presupuesto.seo ? "Sí" : "No"}</li>
-                    <li>Ads: {props.presupuesto.ads ? "Sí" : "No"}</li>
-                </ul>
-            </div>
-            <div><b>Fecha:</b> {props.presupuesto.data}</div>
-            <div><b>Total:</b> {props.presupuesto.price} € </div>
+    console.log(props.presupuesto)
+    return props.presupuesto.map((p) => {
+        return (
+            <div style={{ border: `solid 1px`, padding: `10px`, borderRadius: `15px`, margin: `10px 0`, display: `grid`, width: `200px` }}>
+                <div><b>Nombre:</b> {p.nombrePresupuesto}</div>
+                <div><b>Cliente:</b>{p.nombreCliente}</div>
+                <div>
+                    <b>Pedido:</b>
+                    <ul>
+                        <li>Web: {p.web ? "Sí" : "No"}</li>
+                        <li>Web -->Páginas: {p.paginas}</li>
+                        <li>Web --> Idiomas: {p.idiomas}</li>
+                        <li>SEO: {p.seo ? "Sí" : "No"}</li>
+                        <li>Ads: {p.ads ? "Sí" : "No"}</li>
+                    </ul>
+                </div>
+                <div><b>Fecha:</b> {p.data}</div>
+                <div><b>Total:</b> {p.price} € </div>
 
-        </div >
-
-    )
+            </div >
+        )
+    })
 }
 
-export default ListaPresupuestos
+export default ListaPresupuestos;

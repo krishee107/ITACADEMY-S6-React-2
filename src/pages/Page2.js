@@ -10,8 +10,9 @@ const Page2 = () => {
         const storedPresupuestos = JSON.parse(localStorage.getItem("presupuestos"));
         return storedPresupuestos ? storedPresupuestos : []
     });
-
-    let copiaPresupuestos = [];
+    const [presupuestosOrdenados, setPresupuestosOrdenados] = useState([...presupuestos]);
+    const [orden, setOrden] = useState('');
+    let copiaPresupuestos = [...presupuestos];
 
     const handlePresupuesto = (presupuesto) => {
         const hoy = new Date()
@@ -29,33 +30,38 @@ const Page2 = () => {
             data: fecha
         };
         setPresupuestos([...presupuestos, nuevoPresupuesto]);
+        setPresupuestosOrdenados([...presupuestos, nuevoPresupuesto]);
     };
 
     useEffect(() => {
-        copiaPresupuestos = [...presupuestos]
+        copiaPresupuestos = [...presupuestos];
+        let presupuestosOrdenadosAux = [...presupuestos];
+
+        switch (orden) {
+            case 'alfabetico':
+                presupuestosOrdenadosAux.sort((a, b) => {
+                    if (a.nombrePresupuesto < b.nombrePresupuesto) return -1;
+                    if (a.nombrePresupuesto > b.nombrePresupuesto) return 1;
+                    return 0;
+                });
+                break;
+            case 'fecha':
+                presupuestosOrdenadosAux.sort((a, b) => {
+                    return new Date(b.data) - new Date(a.data);
+                });
+                break;
+            default:
+                presupuestosOrdenadosAux = copiaPresupuestos;
+                break;
+        }
+
+        setPresupuestosOrdenados(presupuestosOrdenadosAux);
         localStorage.setItem("presupuestos", JSON.stringify(presupuestos));
-    }, [presupuestos])
+    }, [presupuestos, orden])
 
-
-    const ordenNombre = () => {
-        const presupuestosNombre = [...presupuestos];
-        presupuestosNombre.sort((a, b) => {
-            if (a.nombrePresupuesto < b.nombrePresupuesto) return -1
-            if (a.nombrePresupuesto > b.nombrePresupuesto) return 1;
-            return 0
-        })
-        return presupuestosNombre
-    }
-    const ordenFecha = () => {
-        const presupuestosFecha = [...presupuestos];
-        presupuestosFecha.sort((a, b) => {
-            return new Date(b.data) - new Date(a.data);
-        });
-        return presupuestosFecha;
-    }
-    const reiniciarOrden = () => {
-        setPresupuestos({ ...copiaPresupuestos })
-    }
+    const ordenNombre = () => { setOrden('alfabetico') }
+    const ordenFecha = () => { setOrden('fecha'); }
+    const reiniciarOrden = () => { setOrden(''); }
 
     return (
         <div>
@@ -72,9 +78,8 @@ const Page2 = () => {
                         <button onClick={ordenFecha}>Fecha</button>
                         <button onclick={reiniciarOrden}>Reiniciar</button>
                     </div>
-                    {presupuestos.map((presupuesto, index) => (
-                        <Presupuesto key={index} presupuesto={presupuesto} />
-                    ))}
+
+                    <Presupuesto presupuesto={presupuestosOrdenados} />
                 </div>
             </div>
 
