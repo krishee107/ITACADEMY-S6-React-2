@@ -1,12 +1,17 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Presupuesto from "../components/Presupuesto";
 import NavBar from "../components/Navbar";
 import Presupuestos from "../components/FormularioPresupuestos";
 
 
 const Page2 = () => {
-    const [presupuestos, setPresupuestos] = useState([]);
+    const [presupuestos, setPresupuestos] = useState(() => {
+        const storedPresupuestos = JSON.parse(localStorage.getItem("presupuestos"));
+        return storedPresupuestos ? storedPresupuestos : []
+    });
+
+    let copiaPresupuestos = [];
 
     const handlePresupuesto = (presupuesto) => {
         const hoy = new Date()
@@ -24,8 +29,33 @@ const Page2 = () => {
             data: fecha
         };
         setPresupuestos([...presupuestos, nuevoPresupuesto]);
-        console.log(presupuestos)
     };
+
+    useEffect(() => {
+        copiaPresupuestos = [...presupuestos]
+        localStorage.setItem("presupuestos", JSON.stringify(presupuestos));
+    }, [presupuestos])
+
+
+    const ordenNombre = () => {
+        const presupuestosNombre = [...presupuestos];
+        presupuestosNombre.sort((a, b) => {
+            if (a.nombrePresupuesto < b.nombrePresupuesto) return -1
+            if (a.nombrePresupuesto > b.nombrePresupuesto) return 1;
+            return 0
+        })
+        return presupuestosNombre
+    }
+    const ordenFecha = () => {
+        const presupuestosFecha = [...presupuestos];
+        presupuestosFecha.sort((a, b) => {
+            return new Date(b.data) - new Date(a.data);
+        });
+        return presupuestosFecha;
+    }
+    const reiniciarOrden = () => {
+        setPresupuestos({ ...copiaPresupuestos })
+    }
 
     return (
         <div>
@@ -37,6 +67,11 @@ const Page2 = () => {
                 </div>
 
                 <div id="listaPresupuestos">
+                    <div id="botones" style={{ display: `flex`, gap: `10px` }}>
+                        <button onClick={ordenNombre}>Alfabetico</button>
+                        <button onClick={ordenFecha}>Fecha</button>
+                        <button onclick={reiniciarOrden}>Reiniciar</button>
+                    </div>
                     {presupuestos.map((presupuesto, index) => (
                         <Presupuesto key={index} presupuesto={presupuesto} />
                     ))}
@@ -49,5 +84,3 @@ const Page2 = () => {
 
 export default Page2;
 
-
-        //console.log(presupuesto[0].nombrePresupuesto, presupuesto[0].nombreCliente, presupuesto[0].web, presupuesto[0].seo)

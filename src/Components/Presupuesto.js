@@ -13,8 +13,8 @@ const ListaPresupuestos = (props) => {
                     <li>Ads: {props.presupuesto.ads ? "Sí" : "No"}</li>
                 </ul>
             </div>
-            <div>Fecha: {props.presupuesto.data}</div>
-            <div>Total: {props.presupuesto.price} € </div>
+            <div><b>Fecha:</b> {props.presupuesto.data}</div>
+            <div><b>Total:</b> {props.presupuesto.price} € </div>
 
         </div >
 
