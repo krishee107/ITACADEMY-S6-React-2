@@ -9,6 +9,9 @@ const Page2 = () => {
     const [presupuestos, setPresupuestos] = useState([]);
 
     const handlePresupuesto = (presupuesto) => {
+        const hoy = new Date()
+        const fecha = hoy.getDate() + "/" + (hoy.getMonth() + 1) + "/" + hoy.getFullYear();
+        console.log(hoy)
         const nuevoPresupuesto = {
             nombrePresupuesto: presupuesto[0].nombrePresupuesto,
             nombreCliente: presupuesto[0].nombreCliente,
@@ -17,7 +20,8 @@ const Page2 = () => {
             ads: presupuesto[0].ads,
             paginas: presupuesto[0].paginas,
             idiomas: presupuesto[0].idiomas,
-            price: presupuesto[0].price
+            price: presupuesto[0].price,
+            data: fecha
         };
         setPresupuestos([...presupuestos, nuevoPresupuesto]);
         console.log(presupuestos)
