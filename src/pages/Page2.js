@@ -13,6 +13,7 @@ const Page2 = () => {
     const [presupuestosOrdenados, setPresupuestosOrdenados] = useState([...presupuestos]);
     const [orden, setOrden] = useState('');
     let copiaPresupuestos = [...presupuestos];
+    const [busqueda, setBusqueda] = useState("");
 
     const handlePresupuesto = (presupuesto) => {
         const hoy = new Date()
@@ -34,6 +35,7 @@ const Page2 = () => {
 
     useEffect(() => {
         copiaPresupuestos = [...presupuestos];
+        let presupuestosFiltrados = [...presupuestos];
         let presupuestosOrdenadosAux = [...presupuestos];
 
         switch (orden) {
@@ -54,13 +56,20 @@ const Page2 = () => {
                 break;
         }
 
-        setPresupuestosOrdenados(presupuestosOrdenadosAux);
+        if (busqueda) {
+            presupuestosFiltrados = presupuestosOrdenadosAux.filter(presupuesto => presupuesto.nombrePresupuesto.toLowerCase().includes(busqueda.toLowerCase()));
+            setPresupuestosOrdenados(presupuestosFiltrados);
+        } else {
+            setPresupuestosOrdenados(presupuestosOrdenadosAux);
+        }
+
         localStorage.setItem("presupuestos", JSON.stringify(presupuestos));
-    }, [presupuestos, orden])
+    }, [presupuestos, orden, busqueda])
 
     const ordenNombre = () => { setOrden('alfabetico') }
     const ordenFecha = () => { setOrden('fecha'); }
     const reiniciarOrden = () => { setOrden(''); }
+    const handleBusqueda = (event) => { setBusqueda(event.target.value); }
 
     return (
         <div>
@@ -76,6 +85,9 @@ const Page2 = () => {
                         <button onClick={ordenNombre}>Alfabetico</button>
                         <button onClick={ordenFecha}>Fecha</button>
                         <button onclick={reiniciarOrden}>Reiniciar</button>
+                    </div>
+                    <div>
+                        <input type="text" name="buscador" id="buscador" onChange={handleBusqueda} placeholder="Nombre del presupuesto" />
                     </div>
 
                     <Presupuesto presupuesto={presupuestosOrdenados} />
