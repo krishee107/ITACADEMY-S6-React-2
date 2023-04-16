@@ -17,7 +17,6 @@ const Page2 = () => {
     const handlePresupuesto = (presupuesto) => {
         const hoy = new Date()
         const fecha = hoy.getDate() + "/" + (hoy.getMonth() + 1) + "/" + hoy.getFullYear();
-        console.log(hoy)
         const nuevoPresupuesto = {
             nombrePresupuesto: presupuesto[0].nombrePresupuesto,
             nombreCliente: presupuesto[0].nombreCliente,

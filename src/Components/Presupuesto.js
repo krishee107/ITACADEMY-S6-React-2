@@ -1,5 +1,4 @@
 const ListaPresupuestos = (props) => {
-    console.log(props.presupuesto)
     return props.presupuesto.map((p) => {
         return (
             <div style={{ border: `solid 1px`, padding: `10px`, borderRadius: `15px`, margin: `10px 0`, display: `grid`, width: `200px` }}>
