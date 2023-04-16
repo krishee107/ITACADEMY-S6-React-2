@@ -119,8 +119,8 @@ const Presupuestos = (props) => {
         <div style={{ border: `solid 1px`, padding: `15px 20px`, borderRadius: `15px` }}>
             <h3 style={{ textAlign: `center` }}>¿Qué quieres hacer?</h3>
             <form style={{ display: `grid`, gap: `10px`, padding: `10px 0` }}>
-                <input type="text" onChange={handleDatos} name="nomPresupuesto" id="nomPresupuesto" placeholder="Nombre del presupuesto" style={{ borderRadius: `15px`, padding: `10px`, border: `1px solid` }} />
-                <input type="text" onChange={handleDatos} name="nomCliente" id="nomCliente" placeholder="Nombre del cliente" style={{ borderRadius: `15px`, padding: `10px`, border: `1px solid` }} />
+                <input type="text" onChange={handleDatos} value={datosPresupuesto.nomPresupuesto} name="nomPresupuesto" id="nomPresupuesto" placeholder="Nombre del presupuesto" style={{ borderRadius: `15px`, padding: `10px`, border: `1px solid` }} />
+                <input type="text" onChange={handleDatos} value={datosPresupuesto.nomCliente} name="nomCliente" id="nomCliente" placeholder="Nombre del cliente" style={{ borderRadius: `15px`, padding: `10px`, border: `1px solid` }} />
 
                 <label htmlFor="web"><input type="checkbox" name="web" id="web" onChange={handleChange} checked={checkboxes.web} /> Una pàgina web (500€)</label>
                 {checkboxes.web &&
